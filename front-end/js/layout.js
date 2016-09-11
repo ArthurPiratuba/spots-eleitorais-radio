@@ -1,7 +1,3 @@
-$(document).ready(function() {
-    $('#side-menu').metisMenu();       
-});
-
 trocarCalendario = function(){
     //Altera os arquivos css do PickaDate (calendário) conforme o tamanho da tela
     if(window.innerWidth < 600){        
