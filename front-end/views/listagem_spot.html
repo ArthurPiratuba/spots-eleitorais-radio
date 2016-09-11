@@ -1,0 +1,62 @@
+<h1 class="page-header">Relação de Spots</h1>
+<form name="consultaSpotForm" novalidate> 
+    <div class="row">  
+        <div class="col-md-4">           
+            <label>Data</label>
+            <input class="form-control datepicker" type="text" id="data_filtro" ng-model="data_filtro" placeholder="Data" pick-a-date="curDate" pick-a-date-options="options" ng-required="true"/>                 <div class="row">
+                <div class="col-md-6">
+                    <label>Bloco</label>
+                    <select class="form-control" type="text" id="bloco_filtro" ng-model="bloco_filtro" placeholder="Bloco" ng-required="true">   
+                        <option value="">Selecione</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                    </select>
+                </div>
+                <div class="col-md-6">     
+                    <label>Cargo</label>
+                    <select class="form-control" type="text" id="cargo_filtro" ng-model="cargo_filtro" placeholder="Cargo" ng-required="true">
+                        <option value="">Selecione</option>            
+                        <option>Vereador</option>
+                        <option>Prefeito</option>
+                    </select>           
+                </div>
+            </div>         
+            <hr>
+            <button ng-click="consultarSpots(data_filtro, bloco_filtro, cargo_filtro)" class="btn btn-primary" ng-disabled="consultaSpotForm.$invalid">Consultar</button>
+            <br>
+        </div>
+        <div class="col-md-8">           
+            <div class="table-responsive">    
+                <label id="label-table">
+                        Resultados: {{spots.length}} - 
+                        Data: {{spots[0].data | date:'dd/MM/yyyy'}} - 
+                        Bloco: {{spots[0].bloco}}
+                </label>         
+                <table class="table table-hover table-bordered table-striped">                             
+                    <thead>
+                        <tr>                            
+                            <th>Hora</th>
+                            <th>Candidatos</th>
+                            <th>Letra</th>
+                            <th>Cargo</th> 
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="s in spots | orderBy: 'hora'" class="tr-hover" ng-click="alteracao(s.cod_spot)">                            
+                            <td>{{s.hora | date: 'HH:mm'}}</td>
+                            <td>
+                                <span ng-repeat="cs in s.candidatos_spot track by $index">
+                                    {{cs.candidato.identificacao}} {{cs.candidato.nome}}
+                                    <span ng-if="$index < (s.candidatos_spot.length - 1)"> - </span>
+                                </span>   
+                            </td>               
+                            <td>{{s.letra}}</td>                                       
+                            <td>{{s.cargo}}</td>                                    
+                        </tr>              
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</form>

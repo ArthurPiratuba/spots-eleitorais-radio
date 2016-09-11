@@ -1,0 +1,22 @@
+<h1 class="page-header">Relatório de Spots</h1>
+
+<label id="label-table">
+    Resultados: {{resultado.length}} - Data: {{resultado[0].data | date: 'dd/MM/yyyy'}}                     
+</label>  
+<table class="table table-bordered table-hover table-striped">
+    <thead>
+        <tr> 
+            <th>Bloco</th>          
+            <th>Hora</th>                      
+            <th>Candidato</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="row in resultado" class="tr-hover">  
+            <td>{{row.bloco}}</td>               
+            <td>{{row.hora | date: 'HH:mm'}}</td>               
+            <td>{{row.nome_candidato}}</td>
+        </tr>        
+    </tbody> 
+</table>
+

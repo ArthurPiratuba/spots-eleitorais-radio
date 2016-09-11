@@ -1,0 +1,35 @@
+<h1 class="page-header">Relatório de Spots</h1>
+
+
+<input 
+class="form-control datepicker" 
+type="text" 
+id="data_consulta" 
+ng-model="data_consulta" 
+placeholder="Data" 
+pick-a-date="curDate" 
+pick-a-date-options="options" 
+ng-required="true" ng-change="consultarSpotsCount(data_consulta)"
+/>
+
+
+<label id="label-table">
+    Resultados: {{resultado.length}}                     
+</label>  
+<table class="table table-bordered table-hover table-striped">
+    <thead>
+        <tr>
+            <th>Data</th> 
+            <th>Contagem</th>                      
+            <th>Candidato</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="row in resultado" class="tr-hover" ng-click="spotCandidatoData(row.candidato.cod_candidato, row.data)">
+            <td>{{row.data | date: 'dd/MM/yyyy'}}</td>        
+            <td>{{row.contagem}}</td>               
+            <td>{{row.candidato.nome}}</td>
+        </tr>        
+    </tbody> 
+</table>
+

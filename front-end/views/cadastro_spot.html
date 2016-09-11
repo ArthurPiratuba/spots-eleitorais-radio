@@ -1,0 +1,82 @@
+﻿<h1 class="page-header">{{titulo}}</h1>           
+<form name="spotForm" novalidate>     
+    <div class="row"> 
+        <div class="col-md-6"> 
+            <label>Bloco</label>
+            <select class="form-control" ng-model="spot.bloco" ng-required="true">   
+                <option selected>1</option>
+                <option>2</option>
+                <option>3</option>
+            </select>               
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Data </label>
+                    <input type="text" pick-a-date="curDate" pick-a-date-options="options" class="form-control datepicker" placeholder="Data" id="data" ng-model="spot.data" ng-required="true"/>
+                </div>
+                <div class="col-md-6">
+                    <label>Hora</label>
+                    <input type="text" class="form-control" placeholder="Hora" id="hora" ng-model="spot.hora" ng-required="true"/>
+                </div>
+            </div>                  
+            <div class="row">
+                <div class="col-md-9">
+                    <label>Cargo</label>
+                    <select class="form-control" ng-model="spot.cargo" ng-required="true">            
+                        <option selected>Vereador</option>
+                        <option>Prefeito</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label>Letra</label>
+                    <select class="form-control" ng-model="spot.letra" ng-required="true">            
+                        <option selected>A</option>
+                        <option>B</option>
+                    </select>
+                </div>
+            </div>                         
+        </div>    
+        <div class="col-md-6">           
+            <label>Candidato</label>
+            <div class="row">       
+                <div class="col-md-12">            
+                    <select ng-change="adicionarCandidato(candidato)"
+                    id="candidato"
+                    class="form-control" 
+                    ng-model="candidato"
+                    ng-options="c.nome for c in candidatos track by c.cod_candidato" name="candidato">
+                        <option value="">Selecione um Candidato</option>
+                    </select>
+                </div>  
+                <br>              
+            </div>            
+            <div class="table-responsive">     
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Partido</th>
+                        <th>Identificação</th>
+                        <th>Coligação</th>
+                        <th></th>
+                    </tr>
+                    </thead>            
+                    <tr ng-repeat="c in spot.candidatos_spot track by $index">
+                        <td>{{c.candidato.nome}}</td>
+                        <td>{{c.candidato.partido}}</td>
+                        <td>{{c.candidato.identificacao}}</td>
+                        <td>{{c.candidato.coligacao.descricao}}</td>
+                        <td><a href="" ng-click="deletarCandidato($index)">Excluir da lista</a></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-2">
+            <button class="btn btn-success" ng-click="cadastrarSpot(spot)" ng-if="!alterar" ng-disabled="spotForm.$invalid || spot.candidatos_spot.length == 0">Cadastrar Spot</button>
+            <button class="btn btn-primary" ng-click="alterarSpot(spot)" ng-if="alterar" ng-disabled="spotForm.$invalid || spot.candidatos_spot.length == 0">Alterar Spot</button>
+            <button class="btn btn-default" ng-click="calcelarAlteracao()" ng-if="alterar">Cancelar</button>
+        </div>         
+    </div>  
+</form>     

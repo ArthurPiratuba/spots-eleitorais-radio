@@ -1,0 +1,103 @@
+<h1 class="page-header">{{titulo}}</h1>           
+<form name="spotForm" novalidate>  
+    <div class="row">
+        <div class="col-md-6"> 
+            <div class="row">
+                <div class="col-md-6"> 
+                    <label>Bloco</label>
+                    <select class="form-control" ng-model="spot.bloco" ng-required="true">   
+                        <option selected>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                    </select>  
+                </div>            
+                <div class="col-md-6"> 
+                    <label>Data </label>
+                    <input type="text" pick-a-date="curDate" pick-a-date-options="options" class="form-control datepicker" placeholder="Data" id="data" ng-model="spot.data" ng-required="true"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-9">
+                    <label>Cargo</label>
+                    <select class="form-control" ng-model="spot.cargo" ng-required="true">
+                        <option value="">Selecione um Cargo</option>            
+                        <option>Vereador</option>
+                        <option>Prefeito</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label>Letra</label>
+                    <select class="form-control" ng-model="spot.letra" ng-required="true">            
+                        <option selected>A</option>
+                        <option>B</option>
+                    </select>
+                </div>
+            </div>   
+            <hr/>          
+            <label>Candidato</label>
+            <div class="row">       
+                <div class="col-md-12">            
+                    <select ng-change="adicionarCandidato(candidato)"
+                    id="candidato"
+                    class="form-control" 
+                    ng-model="candidato"
+                    ng-options="c.nome for c in candidatos track by c.cod_candidato" name="candidato">
+                        <option value="">Selecione um Candidato</option>
+                    </select>
+                </div>  
+                <br>              
+            </div>            
+            <div class="table-responsive">     
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Partido</th>
+                        <th>Identificação</th>
+                        <th>Coligação</th>
+                        <th></th>
+                    </tr>
+                    </thead>            
+                    <tr ng-repeat="c in spot.candidatos_spot track by $index">
+                        <td>{{c.candidato.nome}}</td>
+                        <td>{{c.candidato.partido}}</td>
+                        <td>{{c.candidato.identificacao}}</td>
+                        <td>{{c.candidato.coligacao.descricao}}</td>
+                        <td><a href="" ng-click="deletarCandidato($index)">Excluir da lista</a></td>
+                    </tr>
+                </table>
+            </div>
+        </div>    
+        <div class="col-md-3"> 
+            <label>Hora</label>
+            <div class="row">                 
+                <div class="col-md-8">  
+                    <input type="text" class="form-control" placeholder="Hora" id="horario" ng-model="horario" name="horario" ng-pattern="/^\d{2}:\d{2}$/"/>   
+                </div>   
+                <div class="col-md-4">                     
+                    <button class="btn btn-default" ng-click="adicionarHorario(horario)" ng-disabled="spotForm.horario.$invalid || spotForm.horario.$pristine || spotForm.horario.length == 0">+</button>
+                </div>   
+            </div>  
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">     
+                        <table class="table table-striped">                       
+                            <tbody>
+                                <tr ng-repeat="h in horarios track by $index">
+                                    <td>{{h}}</td>
+                                    <td><a href="" ng-click="excluirHorario($index)">Excluir da Lista</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>      
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-2">
+            <button class="btn btn-success" ng-click="cadastrarSpots(spot, horarios)" ng-disabled="spotForm.$invalid || spot.candidatos_spot.length == 0 || horarios.length == 0">Cadastrar Grupo de Spots</button> 
+        </div>         
+    </div>  
+</form>     

@@ -1,0 +1,56 @@
+﻿<h1 class="page-header">{{titulo}}</h1>
+<form name="cadastroCandidatoForm" novalidate>
+    <div class="row">
+        <div class="col-md-4">
+            <label>Nome</label>
+            <input type="text" class="form-control" ng-model="candidato.nome" placeholder="Nome" ng-required="true"/>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Partido</label>
+                    <input type="text" class="form-control" ng-model="candidato.partido" placeholder="Partido" ng-required="true"/>
+                </div>
+                <div class="col-md-6">
+                    <label>Identificacao</label>
+                    <input type="text" class="form-control" ng-model="candidato.identificacao" placeholder="Identificação" ng-required="true"/>
+                </div>
+            </div>
+            <div class="row">               
+                <div class="col-md-12">
+                    <label>Coligação</label>
+                    <select class="form-control" ng-model="candidato.coligacao" ng-options="coligacao.descricao for coligacao in coligacoes track by coligacao.cod_coligacao" ng-required="true">
+                        <option value="">Selecione uma Coligação</option>            
+                    </select>        
+                </div>
+            </div>           
+            <hr>  
+            <button ng-click="cadastrarCandidato(candidato)" class="btn btn-success" ng-disabled="cadastroCandidatoForm.$invalid" ng-if="!alterar">Cadastrar Candidato</button>
+            <button ng-click="alterarCandidato(candidato)" class="btn btn-primary" ng-disabled="cadastroCandidatoForm.$invalid" ng-if="alterar">Alterar Candidato</button>
+            <button ng-click="cancelarAlteracao()" class="btn btn-default" ng-if="alterar">Cancelar</button>
+            <br>               
+        </div>
+        
+        <div class="col-md-8">
+            <div class="table-responsive">   
+                <label id="label-table">
+                    Resultados: {{candidatos.length}}                        
+                </label> 
+                <table class="table table-hover table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Partido</th>
+                        <th>Identificação</th>
+                        <th>Coligação</th>
+                    </tr>
+                    </thead>            
+                    <tr class="tr-hover" ng-repeat="c in candidatos | orderBy : 'cod_candidato' track by $index" ng-click="alteracao(c.cod_candidato)" title="Clique em mim para alterar">
+                        <td>{{c.nome}}</td>
+                        <td>{{c.partido}}</td>
+                        <td>{{c.identificacao}}</td>
+                        <td>{{c.coligacao.descricao}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</form>
